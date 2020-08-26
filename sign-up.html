@@ -83,7 +83,7 @@
     <link href="styles.css" rel="stylesheet" />
   </head>
   <body class="text-center">
-    <form class="form-signin">
+    <form action="/" class="form-signin" method="POST">
       <img
         class="mb-4"
         src="/images/newspaper.png"
@@ -99,6 +99,7 @@
         type="text"
         class="form-control top"
         placeholder="First Name"
+        name="fname"
         required
         autofocus
       />
@@ -107,12 +108,14 @@
         type="text"
         class="form-control middle"
         placeholder="Last Name"
+        name="lname"
         required
       />
       <input
         type="email"
         class="form-control bottom"
         placeholder="Your Email"
+        name="mail"
         required
       />
 
