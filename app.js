@@ -6,7 +6,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-const port = 3000;
+const port = process.env.PORT;
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/sign-up.html");
