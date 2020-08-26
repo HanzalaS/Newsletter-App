@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
+const https = require("https");
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -15,9 +16,43 @@ app.post("/", (req, res) => {
   const firstName = req.body.fname;
   const lastName = req.body.lname;
   const email = req.body.mail;
-  console.log(firstName, lastName, email);
+
+  const data = {
+    members: [
+      {
+        email_address: email,
+        status: "subscribed",
+        merge_fields: {
+          FNAME: firstName,
+          LNAME: lastName,
+        },
+      },
+    ],
+  };
+  const jsonData = JSON.stringify(data);
+
+  const url = "https://us17.api.mailchimp.com/3.0/lists/2a711d7f1f";
+
+  const option = {
+    method: "POST",
+    auth: "hanzalas:755644587bc6b92252b2718110a32d90-us17",
+  };
+
+  const request = https.request(url, option, (response) => {
+    response.on("data", (data) => {
+      console.log(JSON.parse(data));
+    });
+  });
+  request.write(jsonData);
+  request.end();
 });
 
 app.listen(port, () => {
   console.log(`Exaample app listening at http://localhost:${port}`);
 });
+
+// API KEY
+// 755644587bc6b92252b2718110a32d90-us17
+
+// Audience List KEY
+// 2a711d7f1f
